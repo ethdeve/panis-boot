@@ -1,5 +1,6 @@
 package com.izpan.modules.monitor.scheduler.listener;
 
+import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import com.izpan.modules.monitor.domain.dto.logs.scheduler.MonLogsSchedulerAddDTO;
 import com.izpan.modules.monitor.facade.IMonLogsSchedulerFacade;
 import lombok.extern.slf4j.Slf4j;
@@ -92,7 +93,16 @@ public class SchedulerJobListener implements JobListener {
         }
         // 计算作业执行耗时
         build.setUseTime(System.currentTimeMillis() - startTime);
-        // 添加调度日志
-        monLogsSchedulerFacade.add(build);
+        try {
+            // 按照官方文档方法：Mock上下文，以系统用户执行
+            SaTokenContextMockUtil.setMockContext(() -> {
+                // 添加调度日志
+                monLogsSchedulerFacade.add(build);
+            });
+        } catch (Exception ex) {
+            log.error("Error while adding scheduler log: {}", ex.getMessage(), ex);
+        } finally {
+            log.info("Job : {} was executed. Status: {}, Use Time: {} ms", jobKey, build.getStatus(), build.getUseTime());
+        }
     }
 }
