@@ -36,7 +36,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
             "/api",
             "/api-docs",
             "/api-docs/**",
-            "/doc.html/**"};
+            "/doc.html",
+            "/doc.html/**",
+            "/swagger-ui.html",
+            "/swagger-ui.html/**"};
 
     // 对 Druid 的请求不进行拦截
     public final String[] druidExcludePatterns = new String[]{

@@ -26,6 +26,10 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
         <!-- Jackson Datatype 解决 jackson 转换 Java8 时间问题 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
